@@ -41,20 +41,32 @@ Gravity Gradient - Angular Rates:<img width="1379" height="900" alt="Euler_Fig2_
 ### 4. Reaction Wheel Desaturation
 **Conditions:** High angular momentum (p=0.1, q=0.08, r=0.05 rad/s), damping torques  
 **Result:** Exponential decay of rotation rates over 30 seconds  
-**Application:** **Momentum dump maneuver - directly connects to operational costs**
 
-Reaction Wheel - Euler Angles<img width="1379" height="900" alt="Euler_Fig_RXNWheel" src="https://github.com/user-attachments/assets/6d4d7ce5-dbc5-4ab6-ac2b-a0c6a41894c1" />
-Reaction Wheel - Angular Rates<img width="1393" height="900" alt="Angular_Fig_RXNWheel" src="https://github.com/user-attachments/assets/05206f3f-290d-425c-8fcd-f0c0275f9079" />
+Reaction Wheel - Euler Angles:<img width="1379" height="900" alt="Euler_Fig_RXNWheel" src="https://github.com/user-attachments/assets/6d4d7ce5-dbc5-4ab6-ac2b-a0c6a41894c1" />
+Reaction Wheel - Angular Rates:<img width="1393" height="900" alt="Angular_Fig_RXNWheel" src="https://github.com/user-attachments/assets/05206f3f-290d-425c-8fcd-f0c0275f9079" />
 
 
-**Impact:** Momentum wheel saturation causes gradual propellant burn that can shorten mission life by 20-30%, costing $10-15M in lost revenue on a $50M satellite.
 
----
+Real-World Application: This directly connects to Substack indicator #1 - Momentum Wheel Saturation Creep. When momentum wheels become saturated from accumulated disturbances, operators must dump angular momentum using thrusters. This simulation shows the desaturation maneuver profile.
+Business Value: Predicting how fast momentum builds up (and how often desaturation is needed) directly impacts:
 
-## Technical Details
-- **Euler's equations** of motion for rigid body rotation
-- **Numerical integration:** MATLAB ode45 (Runge-Kutta 4th/5th order)
-- **Satellite specs:** 1000 kg, 500 km LEO, moments of inertia I_xx=1000, I_yy=1500, I_zz=800 kg·m²
+Propellant budget (each desaturation burns fuel)
+Mission lifetime (run out of propellant = mission over)
+Operational planning (when to schedule maneuvers)
+
+
+Technical Details
+Physics Engine: Euler's equations of motion for rigid body rotation
+Governing Equations:
+phi_dot = p + q*sin(phi)*tan(theta) + r*cos(phi)*tan(theta)
+theta_dot = q*cos(phi) - r*sin(phi)
+psi_dot = q*sin(phi)*sec(theta) + r*cos(phi)*sec(theta)
+Numerical Integration: MATLAB's ode45 (Runge-Kutta 4th/5th order adaptive method)
+Satellite Parameters:
+
+Mass: 1000 kg
+Moments of inertia: I_xx=1000, I_yy=1500, I_zz=800 kg·m²
+Orbit: 500 km altitude circular LEO
 
 ---
 
